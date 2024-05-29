@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>    
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/app.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto|Raleway" rel="stylesheet">
+        <title>SafeZone AddData</title>
+        <link rel="import" href="https://avdaredevil.github.io/highcharts-chart/bower_components/paper-input/paper-input.html">
+    </head>
+    <body>
+        <style>
+            #add-data {text-align: center}
+            #add-data input {
+                display: inline-block;
+                width: 45%;
+                background: rgba(255,255,255,.1);
+                border: 0;
+                padding: .5em;
+                margin: .5em;
+                color: var(--color);
+                transition: background .25s;
+            }
+            #add-data input:focus {
+                outline: none;
+                background: rgba(255,255,255,.3)
+            }
+            #add-data button {
+                display: block;
+                margin: 1em auto;
+                padding: .75em 1em;
+                color: var(--color);
+                border: 2px solid white;
+                background: rgba(255,255,255,.17);
+                transition: background .25s;
+                font-family: "Roboto";
+                width: 15em;
+                cursor: pointer;
+                margin-top: 4em;
+            }
+            #add-data button:hover {background: rgba(255,255,255,.4)}
+        </style>
+        <h1 id="app-title">New Zone</h1>
+        <main>
+            <ul class="zone-holder">
+                <div class='data'>
+                    <!--Content is AutoInserted-->
+                </div>
+            </ul>
+            <div>Fill in attributes: </div>
+            <div>
+                <form id="add-data" action="/submitData" method="POST">
+                    <input name='name' placeholder='Enter Zone A, Zone B ... Zone N'>
+                    <input name='lat' placeholder='Enter Latitude'>
+                    <input name='long' placeholder='Enter Longitude'>
+                    <input name='status' placeholder='Enter status of facility'>
+                    <input name='food' placeholder='Enter current food inventory (% remaining)' type='number' min=0 max=100>
+                    <input name='water' placeholder='Enter current water inventory (% remaining)' type='number' min=0 max=100>
+                    <input name='occupancy' placeholder='Enter current occupancy' type='number' min=0>
+                    <input name='capacity' placeholder='Enter max capacity that Zone is capable of hosting' type='number' min=0>
+                    <input name='electricity' placeholder='Is there electricity: Yes / No'>
+                    <button>Submit</button>
+                </form>
+            </div>
+        </main>
+        <script src="/static/app.js"></script>
+        <script>
+            const openModal = i => {
+                const zone = AP.zones[i]
+                Object.keys(zone).forEach(prop => {
+                    const el = $(`[name="${prop}"]`)
+                    el && (el.value = zone[prop])
+                })
+            }
+        </script>
+    </body>
+</html>
